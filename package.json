@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node starter.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "server": "nodemon starter.js",
-    "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "start:prod": "node starter.js",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
